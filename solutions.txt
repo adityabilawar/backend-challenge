@@ -1,0 +1,22 @@
+1. Why did you choose the tools, libraries, and language you used for the coding exercise?
+I chose Python for this exercise because of its readability, versatility, and ability to handle rapid prototyping, making it an excellent fit for building quick and efficient RESTful APIs. 
+Python’s rich set of built-in data structures, like dictionaries and lists, provided an ideal way to manage the data manipulations required for transactions and point balance calculations with minimal overhead. 
+I opted for Flask as the framework because it’s lightweight, highly extensible, and allows for rapid API development with minimal boilerplate. Flask's simplicity in setting up routes, handling HTTP requests, and returning JSON responses made it the optimal choice for quickly building out the necessary endpoints while maintaining flexibility for future enhancements. 
+Additionally, I leveraged the collections library, using defaultdict to handle dynamic key-value pair creation efficiently and OrderedDict to maintain a predictable insertion order in the final output. 
+The datetime module was incorporated to handle timestamp parsing and manipulation, ensuring that transactions were accurately sorted in chronological order, which is crucial for correctly processing the spend operations.
+
+2. What are the advantages and disadvantages of your solution?
+The advantages of my solution include its simplicity and maintainability. 
+The code is structured with clearly defined functions and endpoints, making it both easy to extend and understand. 
+It efficiently handles edge cases, such as adjusting balances for negative transactions, and provides robust validation against invalid inputs, ensuring data integrity. 
+Leveraging Python’s efficient data structures ensures reasonable performance for handling typical use cases within this context. 
+However, there are some trade-offs: the current solution utilizes in-memory storage, meaning all transaction data is lost upon a server restart, which isn't ideal for a production environment where a persistent storage solution, such as a relational or NoSQL database, would be more appropriate. 
+As the volume of transactions scales, sorting operations could become a bottleneck, indicating a need for optimization or integration with a more scalable data storage system. Furthermore, the current implementation does not handle concurrency, so simultaneous requests could lead to race conditions or data inconsistencies. 
+Despite these limitations, the solution demonstrates solid architectural choices and is adaptable for future scalability with additional enhancements.
+
+3. What has been a favorite school/personal project thus far? What about it that challenged you?
+
+One of my favorite school projects was building Musio, an application that connects musicians worldwide through random video chat rooms, each participant playing a unique instrument to collaboratively compose music. 
+The most challenging aspect was implementing the video calling feature using WebRTC while simultaneously minimizing latency to maintain high-quality audio synchronization, which is critical for a seamless music experience. 
+Since WebRTC establishes a peer-to-peer connection to reduce latency, we encountered challenges with lag, particularly on low-spec devices due to the heavy frontend processing. We partially mitigated this by reducing camera quality, which helped improve performance. 
+Another challenge was managing the storage of recorded music videos on user profiles, as storing large media files on CockroachDB proved to be cost-inefficient. Additionally, I dedicated considerable effort to writing comprehensive frontend and backend unit tests, which ultimately took more time than developing the core web components and backend logic, but this testing was crucial for maintaining the app’s quality and stability.
