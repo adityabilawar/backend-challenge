@@ -1,63 +1,95 @@
-Aditya Bilawar's Fetch OA Submission.
-solution.txt includes my part 2 responses
+# Fetch Rewards Backend Challenge Submission by Aditya Bilawar
 
-A User has points in their account to the payer which is the producer.
+This repository contains a Python-based solution for the Fetch Rewards Backend Challenge. The application is a RESTful API built using Flask that allows you to manage payer points, spend points, and retrieve point balances.
 
-ex: 15 points to DANNON at 2:15 pm 9/24/24, spent rewards at 2:15 pm 10/24/24
-    20 points to KELLOGG at 6:15 pm 9/24/24, spent rewards at 6:15 pm  10/24/24
+## Prerequisites
 
-    Route: /add
-    Method: POST
-Description: When a user has points added, we will use an /add route that accepts a transaction which contains
-how many points will be added, what payer the points will be added through, and the timestamp for when the
-transaction takes place. The request body for this endpoint will look like the following:
-{
-"payer" : "DANNON",
-"points" : 5000,
-"timestamp" : "2020-11-02T14:00:00Z"
-}
+Before you begin, ensure you have the following installed:
 
-If transaction was added successfully, then endpoint should respond with a status code of 200 (OK). dont need to include response body 
+- Python 3.7 or higher
+- pip (Python package manager)
 
-400 (BAD REQUEST) is a client-side error status, if the request has some syntax errors or invalid request parameters.
+## Installation
 
-Route: /spend
-Method: POST
-Description: When a user goes to spend their points, they are not aware of what payer their points were added
-through. Because of this, your request body should look like
-{"points" : 5000}
-When a spend request comes in, your service should use the following rules to decide which payer to spend points
-through:
-● We want the oldest points to be spent first (oldest based on transaction timestamp, not the order they’re
-received)
-● We want no payer's points to go negative
+1. **Clone the repository** (if applicable) or copy the source code to your local machine.
 
-If a request was made to spend more points than what a user has in total, then we should return a status
-code of 400 and a message saying the user doesn’t have enough points. This can be done through a text
-response rather than a JSON response/
+2. **Install the required dependencies** using pip:
 
-After your service has successfully
-calculated who to remove points from, the endpoint should respond with a status code of 200 and a list of
-payer names and the number of points that were subtracted. An example of a response body looks like the
-following:
-[
-{ "payer": "DANNON", "points": -100 },
-{ "payer": "UNILEVER", "points": -200 },
-{ "payer": "MILLER COORS", "points": -4,700 }
-]
+    ```bash
+    pip install Flask
+    ```
 
-Route: /balance
-Method: GET
-Description: This route should return a map of points the user has in their account based on the payer they were
-added through. This endpoint can be used to see how many points the user has from each payer at any given
-time. Because this is a GET request, there is no need for a request body. This endpoint should always
-return a 200 and give a response body similar to the following:
-{
-"DANNON": 1000,
-”UNILEVER” : 0,
-"MILLER COORS": 5300
-}
+## Running the Application
 
+1. **Start the Flask server**:
 
+    ```bash
+    python fetch_backend_challenge.py
+    ```
 
+   Make sure to replace `fetch_backend_challenge` with the actual name of the Python file containing your code. The server will start on `http://localhost:8000`.
 
+## API Endpoints
+
+### 1. Add Points
+
+- **Endpoint**: `/add`
+- **Method**: `POST`
+- **Description**: Adds points for a specific payer at a specific timestamp.
+- **Request Payload**:
+    ```json
+    {
+      "payer": "DANNON",
+      "points": 1000,
+      "timestamp": "2022-10-31T10:00:00Z"
+    }
+    ```
+- **Response**: Returns a `200 OK` status if the points are successfully added.
+
+### 2. Spend Points
+
+- **Endpoint**: `/spend`
+- **Method**: `POST`
+- **Description**: Spends points from the oldest available transactions across all payers.
+- **Request Payload**:
+    ```json
+    {
+      "points": 5000
+    }
+    ```
+- **Response**: Returns a JSON array of payers and the points deducted from each.
+    ```json
+    [
+      {"payer": "DANNON", "points": -100},
+      {"payer": "UNILEVER", "points": -200},
+      {"payer": "MILLER COORS", "points": -4700}
+    ]
+    ```
+
+### 3. Get Balance
+
+- **Endpoint**: `/balance`
+- **Method**: `GET`
+- **Description**: Retrieves the current points balance for each payer.
+- **Response**: Returns a JSON object representing the balance of each payer.
+    ```json
+    {
+      "DANNON": 1000,
+      "UNILEVER": 0,
+      "MILLER COORS": 5300
+    }
+    ```
+
+## Important Notes
+
+- All data is stored in memory, so data will be lost when the server is restarted.
+- Make sure to send requests with a valid JSON payload.
+
+## Testing
+
+You can test the endpoints using tools such as Postman or curl.
+
+### Example with curl:
+
+```bash
+curl -X POST "http://localhost:8000/add" -H "Content-Type: application/json" -d '{"payer": "DANNON", "points": 1000, "timestamp": "2022-10-31T10:00:00Z"}'
