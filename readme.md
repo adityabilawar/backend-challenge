@@ -87,7 +87,7 @@ Before you begin, ensure you have the following installed:
 
 ## Testing
 
-You can test the endpoints using tools such as Postman or curl.
+You can test the endpoints using tools such as Postman or curl. I used Postman and highly recommend downloading it and testing it with it.
 
 ### Example with curl:
 
