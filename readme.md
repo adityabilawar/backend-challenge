@@ -1,5 +1,5 @@
 Aditya Bilawar's Fetch OA Submission.
-
+solution.txt includes my part 2 responses
 
 A User has points in their account to the payer which is the producer.
 
